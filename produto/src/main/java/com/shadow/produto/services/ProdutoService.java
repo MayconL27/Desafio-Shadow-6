@@ -15,23 +15,19 @@ import java.util.UUID;
 @Data
 public class ProdutoService {
     @Autowired
-    private ProdutoRepository produtoRepository;
+    final ProdutoRepository produtoRepository;
 
     @Transactional
     public ProdutoEntity save(ProdutoEntity produtoEntity) {
         return produtoRepository.save(produtoEntity);
     }
-
-
     public List<ProdutoEntity> findAll() {
         return produtoRepository.findAll();
     }
-
     public ProdutoEntity findById(UUID id) {
         return produtoRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("ID not found " + id));
     }
-
     public void delete(ProdutoEntity produtoEntity) {
         produtoRepository.delete(produtoEntity);
     }
