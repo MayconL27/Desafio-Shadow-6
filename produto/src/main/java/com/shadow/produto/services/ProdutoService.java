@@ -25,8 +25,7 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
     public ProdutoEntity findById(UUID id) {
-        return produtoRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("ID not found " + id));
+        return produtoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID not found " + id));
     }
     public void delete(ProdutoEntity produtoEntity) {
         produtoRepository.delete(produtoEntity);

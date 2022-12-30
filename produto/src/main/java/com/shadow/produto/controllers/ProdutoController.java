@@ -27,7 +27,7 @@ public class ProdutoController {
     }
     @GetMapping(value = "listartodos")
     public ResponseEntity<List<ProdutoEntity>> listarTodos(){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(produtoService.findAll());
+        return ResponseEntity.status(HttpStatus.OK).body(produtoService.findAll());
     }
     @GetMapping(value = "/{id}")
     public ResponseEntity<ProdutoEntity> buscarID(@PathVariable UUID id) {
