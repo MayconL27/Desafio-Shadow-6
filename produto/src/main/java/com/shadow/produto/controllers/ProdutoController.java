@@ -46,5 +46,17 @@ public class ProdutoController {
         produtoService.delete(produtoOptional.get());
         return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso.");
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> atualizar(@PathVariable(value = "id") UUID id,
+                                                    @RequestBody ProdutoDto produtoDto){
+        Optional<ProdutoEntity> produtoOptional = produtoService.findById(id);
+        if (!produtoOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado.");
+        }
+        var  produtoEntity = new ProdutoEntity();
+        BeanUtils.copyProperties(produtoDto,  produtoEntity); /* conversão de Dto para entity*/
+        produtoEntity.setId(produtoOptional.get().getId()); /* Setando Id para permanecer o mesmo */
+        return ResponseEntity.status(HttpStatus.OK).body(produtoService.save(produtoEntity));
+    }
 
 }
