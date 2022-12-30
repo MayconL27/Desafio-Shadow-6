@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.Optional;
 
 @Service
 @Data
@@ -24,11 +25,12 @@ public class ProdutoService {
     public List<ProdutoEntity> findAll() {
         return produtoRepository.findAll();
     }
-    public ProdutoEntity findById(UUID id) {
-        return produtoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID not found " + id));
-    }
+
     public void delete(ProdutoEntity produtoEntity) {
         produtoRepository.delete(produtoEntity);
     }
 
+    public Optional<ProdutoEntity> findById(UUID id) {
+        return produtoRepository.findById(id);
+    }
 }

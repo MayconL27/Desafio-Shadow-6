@@ -30,17 +30,20 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.OK).body(produtoService.findAll());
     }
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ProdutoEntity> buscarID(@PathVariable UUID id) {
-        ProdutoEntity produto = produtoService.findById(id);
-        return new ResponseEntity<ProdutoEntity>(produto, HttpStatus.OK);
+    public ResponseEntity<Object> buscarID(@PathVariable(value = "id") UUID id) {
+        Optional<ProdutoEntity> produtoEntityOptional = produtoService.findById(id);
+        if (!produtoEntityOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Id não encontrado");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(produtoEntityOptional.get());
     }
-    @DeleteMapping("/{codigoID}")
-    public ResponseEntity<Object> delete(@PathVariable(value = "codigoID") UUID codigoID){
-        Optional<ProdutoEntity> usuariosOptional = Optional.ofNullable(produtoService.findById(codigoID));
-        if (!usuariosOptional.isPresent()) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> delete(@PathVariable(value = "id") UUID id){
+        Optional<ProdutoEntity> produtoOptional = produtoService.findById(id);
+        if (!produtoOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Id não encontrado.");
         }
-        produtoService.delete(usuariosOptional.get());
+        produtoService.delete(produtoOptional.get());
         return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso.");
     }
 
