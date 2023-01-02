@@ -2,7 +2,6 @@ package com.shadow.produto.services;
 
 import com.shadow.produto.entities.ProdutoEntity;
 import com.shadow.produto.repositories.ProdutoRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,5 +35,8 @@ public class ProdutoService {
 
     public Optional<ProdutoEntity> findById(UUID id) { /* Exibir por ID */
         return produtoRepository.findById(id);
+    }
+    public List<ProdutoEntity> findByNome(String descricao) { /* Buscar por nome */
+        return produtoRepository.buscarPorNome(descricao);
     }
 }

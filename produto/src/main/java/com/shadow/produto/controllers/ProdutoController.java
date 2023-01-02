@@ -41,6 +41,13 @@ public class ProdutoController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(produtoEntityOptional.get());
     }
+    @GetMapping(value = "buscarPorNome")
+    @ResponseBody
+    public ResponseEntity<List<ProdutoEntity>> buscarPorNome(@RequestParam(name = "descricao") String descricao) { /* Recebe os dados para consultar */
+        List<ProdutoEntity> produto = produtoService.findByNome(descricao);
+        return new ResponseEntity<List<ProdutoEntity>>(produto, HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}") /* Excluir */
     public ResponseEntity<Object> delete(@PathVariable(value = "id") UUID id){
         Optional<ProdutoEntity> produtoOptional = produtoService.findById(id);
@@ -66,5 +73,4 @@ public class ProdutoController {
             page = 0, size = 5, sort = "descricao", direction = Sort.Direction.ASC) Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(produtoService.findAll(pageable));
     }
-
 }
