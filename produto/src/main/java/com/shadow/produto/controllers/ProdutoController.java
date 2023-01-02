@@ -43,8 +43,8 @@ public class ProdutoController {
     }
     @GetMapping(value = "buscarPorNome")
     @ResponseBody
-    public ResponseEntity<List<ProdutoEntity>> buscarPorNome(@RequestParam(name = "descricao") String descricao) { /* Recebe os dados para consultar */
-        List<ProdutoEntity> produto = produtoService.findByNome(descricao);
+    public ResponseEntity<List<ProdutoEntity>> buscarPorNome(@RequestParam(name = "nomeProduto") String nomeProduto) { /* Recebe os dados para consultar */
+        List<ProdutoEntity> produto = produtoService.findByNome(nomeProduto);
         return new ResponseEntity<List<ProdutoEntity>>(produto, HttpStatus.OK);
     }
 
@@ -70,7 +70,7 @@ public class ProdutoController {
     }
     @GetMapping(value = "listartodospage") /* Paginação */
     public ResponseEntity<Page<ProdutoEntity>> getAllParkingSpots(@PageableDefault( /* Retorna um Page */
-            page = 0, size = 5, sort = "descricao", direction = Sort.Direction.ASC) Pageable pageable){
+            page = 0, size = 5, sort = "nomeProduto", direction = Sort.Direction.ASC) Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(produtoService.findAll(pageable));
     }
 }

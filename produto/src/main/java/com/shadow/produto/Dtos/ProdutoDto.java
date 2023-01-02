@@ -7,7 +7,7 @@ import lombok.Data;
 public class ProdutoDto {
 
     @NotBlank
-    private String descricao;
+    private String nomeProduto;
     @NotBlank
     private double preco;
     @NotBlank

@@ -15,7 +15,7 @@ public class ProdutoEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id; /* Codigo do produto */
     @Column(nullable = false)
-    private String descricao;
+    private String nomeProduto;
     @Column(nullable = false)
     private double preco;
     @Column(nullable = false)

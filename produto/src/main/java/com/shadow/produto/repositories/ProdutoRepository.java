@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.UUID;
 @Repository /* Não é precisa se jpa for extends por Jpa */
 public interface ProdutoRepository extends JpaRepository<ProdutoEntity, UUID> {
-    @Query(value = " select u from ProdutoEntity u where u.descricao like %?1%")
-    List<ProdutoEntity> buscarPorNome(String descricao);
+    @Query(value = " select u from ProdutoEntity u where u.nomeProduto like %?1%")
+    List<ProdutoEntity> buscarPorNome(String nomeProduto);
 }

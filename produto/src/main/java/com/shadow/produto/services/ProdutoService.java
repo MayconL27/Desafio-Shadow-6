@@ -36,7 +36,7 @@ public class ProdutoService {
     public Optional<ProdutoEntity> findById(UUID id) { /* Exibir por ID */
         return produtoRepository.findById(id);
     }
-    public List<ProdutoEntity> findByNome(String descricao) { /* Buscar por nome */
-        return produtoRepository.buscarPorNome(descricao);
+    public List<ProdutoEntity> findByNome(String nomeProduto) { /* Buscar por nome */
+        return produtoRepository.buscarPorNome(nomeProduto);
     }
 }
