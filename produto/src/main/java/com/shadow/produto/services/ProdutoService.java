@@ -2,6 +2,7 @@ package com.shadow.produto.services;
 
 import com.shadow.produto.entities.ProdutoEntity;
 import com.shadow.produto.repositories.ProdutoRepository;
+import com.shadow.produto.services.exceptions.EntityNotFoundException;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,14 +30,15 @@ public class ProdutoService {
     public Page<ProdutoEntity> findAll(Pageable pageable) { /* Consultar paginado */
         return produtoRepository.findAll(pageable);
     }
-    public void delete(ProdutoEntity produtoEntity) {
-        produtoRepository.delete(produtoEntity);
+    public ProdutoEntity findById(UUID id) { /* Exibir por ID */
+        return produtoRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(" Id not found " + id));
     }
-
-    public Optional<ProdutoEntity> findById(UUID id) { /* Exibir por ID */
-        return produtoRepository.findById(id);
+    public void delete(ProdutoEntity produtoEntity) { /* Deletar */
+        produtoRepository.delete(produtoEntity);
     }
     public List<ProdutoEntity> findByNome(String nomeProduto) { /* Buscar por nome */
         return produtoRepository.buscarPorNome(nomeProduto);
     }
+
 }

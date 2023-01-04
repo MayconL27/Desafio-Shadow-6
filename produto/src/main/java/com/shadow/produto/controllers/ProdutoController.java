@@ -2,16 +2,19 @@ package com.shadow.produto.controllers;
 
 import com.shadow.produto.Dtos.ProdutoDto;
 import com.shadow.produto.entities.ProdutoEntity;
+import com.shadow.produto.repositories.ProdutoRepository;
 import com.shadow.produto.services.ProdutoService;
 import jakarta.validation.Valid;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,12 +37,9 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.OK).body(produtoService.findAll());
     }
     @GetMapping(value = "/{id}") /* Consultar por id */
-    public ResponseEntity<Object> buscarID(@PathVariable(value = "id") UUID id) {
-        Optional<ProdutoEntity> produtoEntityOptional = produtoService.findById(id);
-        if (!produtoEntityOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Id não encontrado");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(produtoEntityOptional.get());
+    public ResponseEntity<ProdutoEntity> buscarID(@PathVariable UUID id) {
+        ProdutoEntity produto = produtoService.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(produto);
     }
     @GetMapping(value = "buscarPorNome")
     @ResponseBody
@@ -47,30 +47,23 @@ public class ProdutoController {
         List<ProdutoEntity> produto = produtoService.findByNome(nomeProduto);
         return new ResponseEntity<List<ProdutoEntity>>(produto, HttpStatus.OK);
     }
-
-    @DeleteMapping("/{id}") /* Excluir */
-    public ResponseEntity<Object> delete(@PathVariable(value = "id") UUID id){
-        Optional<ProdutoEntity> produtoOptional = produtoService.findById(id);
-        if (!produtoOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Id não encontrado.");
-        }
-        produtoService.delete(produtoOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso.");
-    }
-    @PutMapping("/{id}") /* Editar */
-    public ResponseEntity<Object> atualizar(@PathVariable(value = "id") UUID id, @RequestBody ProdutoDto produtoDto){
-        Optional<ProdutoEntity> produtoOptional = produtoService.findById(id);
-        if (!produtoOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado.");
-        }
-        var produtoEntity = new ProdutoEntity();
-        BeanUtils.copyProperties(produtoDto,  produtoEntity); /* conversão de Dto para entity*/
-        produtoEntity.setId(produtoOptional.get().getId()); /* Setando Id para permanecer o mesmo */
-        return ResponseEntity.status(HttpStatus.OK).body(produtoService.save(produtoEntity));
-    }
     @GetMapping(value = "listartodospage") /* Paginação */
     public ResponseEntity<Page<ProdutoEntity>> getAllParkingSpots(@PageableDefault( /* Retorna um Page */
             page = 0, size = 5, sort = "nomeProduto", direction = Sort.Direction.ASC) Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(produtoService.findAll(pageable));
+    }
+    @DeleteMapping("/{id}") /* Excluir */
+    public ResponseEntity<?> delete(@PathVariable(value = "id") UUID id){
+        ProdutoEntity produto = produtoService.findById(id);
+        produtoService.delete(produto);
+        return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso.");
+    }
+    @PutMapping("/{id}") /* Atualizar */
+    public ResponseEntity<ProdutoEntity> atualizar(@PathVariable(value = "id") UUID id ,@RequestBody ProdutoDto produtoDto) {
+        ProdutoEntity produto = produtoService.findById(id);
+        var produtoEntity = new ProdutoEntity();
+        BeanUtils.copyProperties(produtoDto, produtoEntity);
+        produtoEntity.setId(produto.getId());
+        return ResponseEntity.status(HttpStatus.OK).body(produtoService.save(produtoEntity));
     }
 }
