@@ -28,8 +28,9 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.save(produtoEntity));
     }
     @GetMapping(value = "listartodos")
-    public ResponseEntity<List<ProdutoEntity>> listarTodos(){
-        return ResponseEntity.status(HttpStatus.OK).body(produtoService.findAll());
+    public ResponseEntity<Page<ProdutoEntity>> listarTodos(@PageableDefault( /* Retorna um Page */
+            page = 0, size = 5, direction = Sort.Direction.ASC) Pageable pageable){
+        return ResponseEntity.status(HttpStatus.OK).body(produtoService.findAll(pageable));
     }
     @GetMapping(value = "/{id}") /* Consultar por id */
     public ResponseEntity<ProdutoEntity> buscarID(@PathVariable UUID id) {
