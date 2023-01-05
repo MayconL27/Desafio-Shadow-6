@@ -21,7 +21,6 @@ public class ProdutoEntity implements Serializable {
     private double preco;
     @Column(nullable = false)
     private int quantidade;
-    @JsonFormat(with = JsonFormat.Feature.ACCEPT_CASE_INSENSITIVE_PROPERTIES)
     private Categoria categoria;
 
 

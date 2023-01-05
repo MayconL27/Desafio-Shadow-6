@@ -1,6 +1,7 @@
 package com.shadow.produto.controllers;
 
 import com.shadow.produto.Dtos.ProdutoDto;
+import com.shadow.produto.entities.Categoria;
 import com.shadow.produto.entities.ProdutoEntity;
 import com.shadow.produto.services.ProdutoService;
 import lombok.Data;
@@ -20,9 +21,10 @@ import java.util.UUID;
 @Data
 public class ProdutoController {
     final ProdutoService produtoService;
-
     @PostMapping(value = "salvar") /* Cadastrar novos produtos */
     public ResponseEntity<?> cadastrarProduto(@RequestBody ProdutoDto produtoDto) {
+        //var categoriaTratada = Categoria.valueOfName(produtoDto.categoria());
+
         var produtoEntity = new ProdutoEntity();
         BeanUtils.copyProperties(produtoDto, produtoEntity); /* conversão de (Dto, entity); */
         return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.save(produtoEntity));

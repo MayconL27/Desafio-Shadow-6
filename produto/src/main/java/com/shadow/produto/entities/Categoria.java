@@ -21,4 +21,12 @@ public enum Categoria {
         }
         throw new IllegalArgumentException("Invalid Categoria code");
     }
+//    public static Categoria valueOfName(String nome) {
+//        for(Categoria value : Categoria.values()) {
+//            if(value.name().equalsIgnoreCase(nome)) {
+//                return value;
+//            }
+//        }
+//        throw new IllegalArgumentException("Invalid Categoria code");
+//    }
 }
