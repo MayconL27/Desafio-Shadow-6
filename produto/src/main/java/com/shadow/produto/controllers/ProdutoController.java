@@ -2,23 +2,18 @@ package com.shadow.produto.controllers;
 
 import com.shadow.produto.Dtos.ProdutoDto;
 import com.shadow.produto.entities.ProdutoEntity;
-import com.shadow.produto.repositories.ProdutoRepository;
 import com.shadow.produto.services.ProdutoService;
-import jakarta.validation.Valid;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -59,7 +54,7 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso.");
     }
     @PutMapping("/{id}") /* Atualizar */
-    public ResponseEntity<ProdutoEntity> atualizar(@PathVariable(value = "id") UUID id ,@RequestBody ProdutoDto produtoDto) {
+    public ResponseEntity<ResponseEntity> atualizar(@PathVariable(value = "id") UUID id , @RequestBody ProdutoDto produtoDto) {
         ProdutoEntity produto = produtoService.findById(id);
         var produtoEntity = new ProdutoEntity();
         BeanUtils.copyProperties(produtoDto, produtoEntity);
