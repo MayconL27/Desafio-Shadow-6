@@ -27,7 +27,7 @@ public class ProdutoController {
 
         var produtoEntity = new ProdutoEntity();
         BeanUtils.copyProperties(produtoDto, produtoEntity); /* conversão de (Dto, entity); */
-        return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.save(produtoEntity));
+        return produtoService.save(produtoEntity);
     }
     @GetMapping(value = "listartodos")
     public ResponseEntity<Page<ProdutoEntity>> listarTodos(@PageableDefault( /* Retorna um Page */
