@@ -1,6 +1,5 @@
 package com.shadow.produto.entities;
 
-import com.shadow.produto.Dtos.ProdutoDto;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -21,6 +20,7 @@ public class ProdutoEntity implements Serializable {
     private double preco;
     @Column(nullable = false)
     private int quantidade;
+    private Categoria categoria;
 
 
 }
