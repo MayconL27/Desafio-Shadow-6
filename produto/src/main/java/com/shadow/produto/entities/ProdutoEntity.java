@@ -1,5 +1,6 @@
 package com.shadow.produto.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,6 +21,7 @@ public class ProdutoEntity implements Serializable {
     private double preco;
     @Column(nullable = false)
     private int quantidade;
+    @JsonFormat(with = JsonFormat.Feature.ACCEPT_CASE_INSENSITIVE_PROPERTIES)
     private Categoria categoria;
 
 

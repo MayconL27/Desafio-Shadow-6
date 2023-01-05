@@ -28,7 +28,7 @@ public class ProdutoService {
     @Transactional
     public ResponseEntity save(ProdutoEntity produtoEntity) {
         Optional<ProdutoEntity> optionalProdutoEntity = Optional.ofNullable(produtoEntity);
-        if (produtoEntity.getNomeProduto().isBlank() || produtoEntity.getPreco()<=0) {
+        if (produtoEntity.getNomeProduto().isBlank() || produtoEntity.getPreco()<=0 || produtoEntity.getQuantidade()<=0) {
             handler = new Handler("insira um valor valido", Optional.of(produtoEntity));
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(handler);
         }
