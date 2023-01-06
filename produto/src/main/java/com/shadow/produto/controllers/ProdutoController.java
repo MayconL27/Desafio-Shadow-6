@@ -42,7 +42,7 @@ public class ProdutoController {
     @GetMapping(value = "buscarPorNome")
     @ResponseBody
     public ResponseEntity<List<ProdutoEntity>> buscarPorNome(@RequestParam(name = "nomeProduto") String nomeProduto) { /* Recebe os dados para consultar */
-        List<ProdutoEntity> produto = produtoService.findByNome(nomeProduto);
+        List<ProdutoEntity> produto = produtoService.findByNome(nomeProduto.trim()); /* trim aceita espaço depois do nome */
         return new ResponseEntity<List<ProdutoEntity>>(produto, HttpStatus.OK);
     }
     @GetMapping(value = "listartodospage") /* Paginação */
