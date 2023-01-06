@@ -24,7 +24,6 @@ public class ProdutoController {
     @PostMapping(value = "salvar") /* Cadastrar novos produtos */
     public ResponseEntity<?> cadastrarProduto(@RequestBody ProdutoDto produtoDto) {
         //var categoriaTratada = Categoria.valueOfName(produtoDto.categoria());
-
         var produtoEntity = new ProdutoEntity();
         BeanUtils.copyProperties(produtoDto, produtoEntity); /* conversão de (Dto, entity); */
         return produtoService.save(produtoEntity);
@@ -43,7 +42,7 @@ public class ProdutoController {
     @ResponseBody
     public ResponseEntity<List<ProdutoEntity>> buscarPorNome(@RequestParam(name = "nomeProduto") String nomeProduto) { /* Recebe os dados para consultar */
         List<ProdutoEntity> produto = produtoService.findByNome(nomeProduto.trim()); /* trim aceita espaço depois do nome */
-        return new ResponseEntity<List<ProdutoEntity>>(produto, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(produtoService.findByNome(nomeProduto.trim()));
     }
     @GetMapping(value = "listartodospage") /* Paginação */
     public ResponseEntity<Page<ProdutoEntity>> getAllParkingSpots(@PageableDefault( /* Retorna um Page */
