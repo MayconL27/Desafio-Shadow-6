@@ -1,21 +1,24 @@
 package com.shadow.produto.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
-import lombok.Data;
 
-import java.io.Serializable;
-import java.util.UUID;
+import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+
 
 @Entity
 @Table(name = "PRODUTOS")
 @Data
-public class ProdutoEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class ProdutoEntity{
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id; /* Codigo do produto */
+    @GenericGenerator(name="UUIDGenerator", strategy = "uuid2")
+    @GeneratedValue(generator = "UUIDGenerator")
+    private String id; /* Codigo do produto */
     @Column(nullable = false)
+    @NotBlank
     private String nomeProduto;
     @Column(nullable = false)
     private double preco;

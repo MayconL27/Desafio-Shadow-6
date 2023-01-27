@@ -8,7 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.UUID;
 @Repository /* Não é precisa se jpa for extends por Jpa */
-public interface ProdutoRepository extends JpaRepository<ProdutoEntity, UUID> {
+public interface ProdutoRepository extends JpaRepository<ProdutoEntity, String> {
     @Query(value = " select u from ProdutoEntity u where trim(u.nomeProduto) like ?1%")
     List<ProdutoEntity> buscarPorNome(String nomeProduto);
+
+//    boolean produtoExistente(String nomeProduto);
 }
